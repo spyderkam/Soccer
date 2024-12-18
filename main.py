@@ -23,7 +23,7 @@ GREEN = (50, 168, 82)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
-# Team formations
+# Teams and team formations
 ORIGINAL_BLUE = formation("433")[0]
 ORIGINAL_RED = formation("442")[1]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
