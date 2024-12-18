@@ -5,7 +5,7 @@ __author__ = "spyderkam"
 def formation(formation_type):
   match formation_type:
     case "433":
-      return [
+      return {"blue": [
         [75, 300],   # GK
         [235, 140],  # LB
         [190, 250],  # LCB
@@ -17,7 +17,7 @@ def formation(formation_type):
         [500, 150],  # LW
         [500, 300],  # ST
         [500, 450],  # RW
-      ], [
+      ], "red": [
         [725, 300],  # GK
         [565, 140],  # LB
         [610, 250],  # LCB
@@ -29,10 +29,10 @@ def formation(formation_type):
         [300, 150],  # LW
         [300, 300],  # ST
         [300, 450],  # RW
-      ]
+      ]}
 
     case "442":
-      return [
+      return {"blue": [
         [75, 300],   # GK
         [235, 140],  # LB
         [190, 250],  # LCB
@@ -44,7 +44,7 @@ def formation(formation_type):
         [350, 450],  # RM
         [500, 250],  # LST
         [500, 350],  # RST
-      ], [
+      ], "red": [
         [725, 300],  # GK
         [565, 140],  # LB
         [610, 250],  # LCB
@@ -56,4 +56,4 @@ def formation(formation_type):
         [450, 450],  # RM
         [300, 250],  # LST
         [300, 350],  # RST
-      ]
+      ]}
