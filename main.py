@@ -24,8 +24,8 @@ RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
 # Teams and team formations
-ORIGINAL_BLUE = formation("433")[0]     # 0 indicates blue team.
-ORIGINAL_RED = formation("442")[1]      # 1 indicates red team.
+ORIGINAL_BLUE = formation("433")["blue"]
+ORIGINAL_RED = formation("442")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
