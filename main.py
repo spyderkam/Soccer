@@ -84,9 +84,6 @@ def main():
             if len(triangle_points) < 3:
               triangle_points.append(RED_TEAM[red_player])
             dragging = True
-          
-          if len(triangle_points) == 3:
-            show_triangle = True
       elif event.type == pygame.MOUSEBUTTONUP:
         dragging = False
         dragging_ball = False
@@ -100,9 +97,12 @@ def main():
           BALL_POS[1] = HEIGHT//2
           triangle_points.clear()  # Reset triangle points
           show_triangle = False    # Hide triangle
-        elif event.key == pygame.K_t:  # Press 'T' to reset triangle
-          triangle_points.clear()
-          show_triangle = False
+        elif event.key == pygame.K_t:  # Press 'T' to toggle triangle
+          if len(triangle_points) == 3:
+            show_triangle = not show_triangle
+          else:
+            triangle_points.clear()
+            show_triangle = False
         elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
           show_numbers = not show_numbers
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball
