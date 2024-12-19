@@ -107,6 +107,9 @@ def main():
           show_numbers = not show_numbers
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball
           SHOW_BALL = not SHOW_BALL
+        elif event.key == pygame.K_y:  # Press 'Y' to reset triangle
+          triangle_points.clear()
+          show_triangle = False
       elif event.type == pygame.MOUSEMOTION:
         mouse_pos = pygame.mouse.get_pos()
         if dragging:
