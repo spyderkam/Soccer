@@ -1,5 +1,7 @@
 #!/user/bin/env python3
 
+__author__ = "spyderkam"
+
 import pygame
 
 def draw_triangle(screen, points, team_color):
