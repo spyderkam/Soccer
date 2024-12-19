@@ -7,7 +7,6 @@ import os
 import pygame
 import sys
 
-
 # Initialize Pygame
 pygame.init()
 
@@ -29,13 +28,17 @@ ORIGINAL_RED = formation("442")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
+# Ball settings
+BALL_POS = [WIDTH//2, HEIGHT//2]
+SHOW_BALL = False
+
 def draw_player(screen, pos, color, number=None, show_numbers=False):
-    pygame.draw.circle(screen, color, pos, 10)
-    if show_numbers and number is not None:
-        font = pygame.font.Font(None, 20)
-        text = font.render(str(number), True, WHITE)
-        text_rect = text.get_rect(center=pos)
-        screen.blit(text, text_rect)
+  pygame.draw.circle(screen, color, pos, 10)
+  if show_numbers and number is not None:
+    font = pygame.font.Font(None, 20)
+    text = font.render(str(number), True, WHITE)
+    text_rect = text.get_rect(center=pos)
+    screen.blit(text, text_rect)
 
 def get_clicked_player(pos, team):
   for i, player_pos in enumerate(team):
@@ -50,7 +53,7 @@ def main():
   dragging = False
   selected_team = None
   selected_player = None
-  show_numbers = True  # Toggle with 'N' key
+  show_numbers = True
     
   while running:
     for event in pygame.event.get():
@@ -69,17 +72,19 @@ def main():
           selected_team = RED_TEAM
           selected_player = red_player
           dragging = True
-
       elif event.type == pygame.MOUSEBUTTONUP:
         dragging = False
         selected_team = None
         selected_player = None
       elif event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_r:  # Press 'R' to reset
+        if event.key == pygame.K_r:    # Press 'R' to reset formations
           BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
-        elif event.key == pygame.K_n:  # Press 'N' to toggle numbers
+        elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
           show_numbers = not show_numbers
+        elif event.key == pygame.K_b:  # Press 'B' to toggle ball
+          global SHOW_BALL
+          SHOW_BALL = not SHOW_BALL
       elif event.type == pygame.MOUSEMOTION and dragging:
         mouse_pos = pygame.mouse.get_pos()
         selected_team[selected_player][0] = mouse_pos[0]
@@ -112,6 +117,10 @@ def main():
       draw_player(SCREEN, pos, BLUE, i, show_numbers)
     for i, pos in enumerate(RED_TEAM, 1):
       draw_player(SCREEN, pos, RED, i, show_numbers)
+
+    # Draw ball
+    if SHOW_BALL:
+      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 8)
 
     # Update display
     pygame.display.flip()
