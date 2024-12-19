@@ -4,6 +4,7 @@
 __author__ = "spyderkam"
 
 from database import *
+from tools import draw_triangle
 import os
 import pygame
 import sys
@@ -27,6 +28,10 @@ RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 BALL_POS = [WIDTH//2, HEIGHT//2]
 SHOW_BALL = False
 
+# Triangle settings
+triangle_points = []
+show_triangle = False
+
 def draw_player(screen, pos, color, number=None, show_numbers=False):
   pygame.draw.circle(screen, color, pos, 10)
   if show_numbers and number is not None:
@@ -48,7 +53,7 @@ def is_ball_clicked(pos):
 
 # Main game loop
 def main():
-  global SHOW_BALL
+  global SHOW_BALL, show_triangle
   running = True
   dragging = False
   dragging_ball = False
@@ -71,11 +76,18 @@ def main():
           if blue_player is not None:
             selected_team = BLUE_TEAM
             selected_player = blue_player
+            if len(triangle_points) < 3:
+              triangle_points.append(BLUE_TEAM[blue_player])
             dragging = True
           elif red_player is not None:
             selected_team = RED_TEAM
             selected_player = red_player
+            if len(triangle_points) < 3:
+              triangle_points.append(RED_TEAM[red_player])
             dragging = True
+          
+          if len(triangle_points) == 3:
+            show_triangle = True
       elif event.type == pygame.MOUSEBUTTONUP:
         dragging = False
         dragging_ball = False
@@ -87,6 +99,8 @@ def main():
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
           BALL_POS[0] = WIDTH//2
           BALL_POS[1] = HEIGHT//2
+          triangle_points.clear()  # Reset triangle points
+          show_triangle = False    # Hide triangle
         elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
           show_numbers = not show_numbers
         elif event.key == pygame.K_b:  # Press 'B' to toggle ball
@@ -131,6 +145,10 @@ def main():
     # Draw ball
     if SHOW_BALL:
       pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 8)
+
+    # Draw triangle
+    if show_triangle and len(triangle_points) == 3:
+      draw_triangle(SCREEN, triangle_points, selected_team)
 
     # Update display
     pygame.display.flip()
