@@ -3,7 +3,7 @@
 
 __author__ = "spyderkam"
 
-from formations import formation
+from database import *
 import os
 import pygame
 import sys
@@ -15,16 +15,10 @@ pygame.init()
 WIDTH = 800
 HEIGHT = 600
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Football Field")
-
-# Colors
-BLUE = (0, 0, 255)
-GREEN = (50, 168, 82)
-RED = (255, 0, 0)
-WHITE = (255, 255, 255)
+pygame.display.set_caption("Tactics Board")
 
 # Teams and team formations
-ORIGINAL_BLUE = formation("433")["blue"]
+ORIGINAL_BLUE = formation("4231")["blue"]
 ORIGINAL_RED = formation("442")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
