@@ -44,9 +44,16 @@ HTML_TEMPLATE = '''
     let showNumbers = false;
     let show_triangle = false;
 
-    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousedown', (e) => {
+      handleMouseDown(e);
+      dragging = true;
+    });
     canvas.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseup', () => {
+      dragging = false;
+      selectedPlayer = null;
+    });
+    canvas.addEventListener('mouseleave', () => {
       dragging = false;
       selectedPlayer = null;
     });
@@ -186,11 +193,13 @@ def reset_triangle():
 
 @socketio.on('reset_board')
 def reset_board():
-  global BLUE_TEAM, RED_TEAM, BALL_POS
+  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, show_triangle
   from main import ORIGINAL_BLUE, ORIGINAL_RED
   BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
   RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
   BALL_POS[:] = [WIDTH//2, HEIGHT//2]
+  triangle_points.clear()
+  show_triangle = False
   update_board()
 
 def update_board():
@@ -226,3 +235,4 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
+  
