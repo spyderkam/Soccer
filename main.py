@@ -18,8 +18,8 @@ SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tactics Board")
 
 # Teams and team formations
-ORIGINAL_BLUE = formation("4231")["blue"]
-ORIGINAL_RED = formation("442")["red"]
+ORIGINAL_BLUE = formation("442")["blue"]
+ORIGINAL_RED = formation("4231")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
