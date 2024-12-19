@@ -20,7 +20,7 @@ HTML_TEMPLATE = '''
 <body style="text-align: center;">
   <h1>Tactics Board</h1>
   <img src="/board" style="max-width: 100%; height: auto;">
-  <p>Use the desktop version for interactive features.</p>
+  <p>For interactive features like dragging players and using keyboard shortcuts (B, N, R, T, Y), please use this project directly in the Replit workspace editor.</p>
 </body>
 </html>
 '''
