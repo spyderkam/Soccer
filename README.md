@@ -8,7 +8,7 @@
 - **T:** Toggle triangle (first 3 players after reset)
 - **Y:** Reset triangle
 
-## Help
+## Questions Answered
 
 ### How would changing `BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]` in the `# Teams and team formations` section of `main.py` to `BLUE_TEAM = ORIGINAL_BLUE` affect this program?
 
