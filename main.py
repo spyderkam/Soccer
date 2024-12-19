@@ -90,24 +90,24 @@ def main():
         selected_team = None
         selected_player = None
       elif event.type == pygame.KEYDOWN:
-        if event.key == pygame.K_r:    # Press 'R' to reset formations
+        if event.key == pygame.K_r:    # Press 'R' to reset formations and triangle.
           BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
           RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
           BALL_POS[0] = WIDTH//2
           BALL_POS[1] = HEIGHT//2
-          triangle_points.clear()  # Reset triangle points
-          show_triangle = False    # Hide triangle
-        elif event.key == pygame.K_t:  # Press 'T' to toggle triangle
+          triangle_points.clear()      # Reset triangle points.r
+          show_triangle = False        # Hide triangle.
+        elif event.key == pygame.K_t:  # Press 'T' to toggle triangle.
           if len(triangle_points) == 3:
             show_triangle = not show_triangle
           else:
             triangle_points.clear()
             show_triangle = False
-        elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers
+        elif event.key == pygame.K_n:  # Press 'N' to toggle jersey numbers.
           show_numbers = not show_numbers
-        elif event.key == pygame.K_b:  # Press 'B' to toggle ball
+        elif event.key == pygame.K_b:  # Press 'B' to toggle ball.
           SHOW_BALL = not SHOW_BALL
-        elif event.key == pygame.K_y:  # Press 'Y' to reset triangle
+        elif event.key == pygame.K_y:  # Press 'Y' to reset triangle.
           triangle_points.clear()
           show_triangle = False
       elif event.type == pygame.MOUSEMOTION:
