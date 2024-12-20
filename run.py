@@ -44,9 +44,16 @@ HTML_TEMPLATE = '''
     let showNumbers = false;
     let show_triangle = false;
 
-    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mousedown', (e) => {
+      handleMouseDown(e);
+      dragging = true;
+    });
     canvas.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseup', () => {
+      dragging = false;
+      selectedPlayer = null;
+    });
+    canvas.addEventListener('mouseleave', () => {
       dragging = false;
       selectedPlayer = null;
     });
@@ -186,11 +193,13 @@ def reset_triangle():
 
 @socketio.on('reset_board')
 def reset_board():
-  global BLUE_TEAM, RED_TEAM, BALL_POS
+  global BLUE_TEAM, RED_TEAM, BALL_POS, triangle_points, show_triangle
   from main import ORIGINAL_BLUE, ORIGINAL_RED
   BLUE_TEAM[:] = [pos[:] for pos in ORIGINAL_BLUE]
   RED_TEAM[:] = [pos[:] for pos in ORIGINAL_RED]
   BALL_POS[:] = [WIDTH//2, HEIGHT//2]
+  triangle_points.clear()
+  show_triangle = False
   update_board()
 
 def update_board():
@@ -200,8 +209,8 @@ def update_board():
   pygame.draw.line(SCREEN, WHITE, (WIDTH//2, 60), (WIDTH//2, HEIGHT-60), 2)
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 85, 2)
   pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
-  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-150, 180, 300), 2)          # Left penalty area
-  pygame.draw.rect(SCREEN, WHITE, (WIDTH-260, HEIGHT//2-150, 180, 300), 2)   # Right penalty area
+  pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-180, 240, 360), 2)          # Left penalty area
+  pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, HEIGHT//2-180, 240, 360), 2)   # Right penalty area
   pygame.draw.rect(SCREEN, WHITE, (80, HEIGHT//2-90, 72, 180), 2)            # Left goal area
   pygame.draw.rect(SCREEN, WHITE, (WIDTH-152, HEIGHT//2-90, 72, 180), 2)     # Right goal area
 
