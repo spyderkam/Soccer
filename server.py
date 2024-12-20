@@ -46,6 +46,9 @@ HTML_TEMPLATE = '''
     let showBall = false;
     let showNumbers = false;
     let show_triangle = false;
+    let lastMousePos = { x: 0, y: 0 };
+    const throttleDelay = 16; // ~60fps
+    let lastUpdate = 0;
 
     canvas.addEventListener('mousedown', (e) => {
       handleMouseDown(e);
@@ -84,11 +87,20 @@ HTML_TEMPLATE = '''
     }
 
     function handleMouseMove(e) {
-      if (!dragging) return;
+      if (!dragging || !selectedPlayer) return;
+      
+      const now = Date.now();
+      if (now - lastUpdate < throttleDelay) return;
+      
       const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-      const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-      socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
+      const x = Math.max(0, Math.min(canvas.width, (e.clientX - rect.left) * (canvas.width / rect.width)));
+      const y = Math.max(0, Math.min(canvas.height, (e.clientY - rect.top) * (canvas.height / rect.height)));
+      
+      if (Math.abs(x - lastMousePos.x) > 1 || Math.abs(y - lastMousePos.y) > 1) {
+        socket.emit('move_player', {x: x, y: y, team: selectedPlayer.team, index: selectedPlayer.index});
+        lastMousePos = { x, y };
+        lastUpdate = now;
+      }
     }
 
     function toggleBall() {
