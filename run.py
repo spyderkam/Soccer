@@ -26,6 +26,7 @@ HTML_TEMPLATE = '''
 </head>
 <body style="text-align: center;">
   <h1>Tactics Board</h1>
+  <h2>@spyderkam</h2>
   <div class="controls">
     <button onclick="toggleBall()">Toggle Ball (B)</button>
     <button onclick="toggleNumbers()">Toggle Numbers (N)</button>
