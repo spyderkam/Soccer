@@ -18,8 +18,8 @@ SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tactics Board")
 
 # Teams and team formations
-ORIGINAL_BLUE = formation("442")["blue"]
-ORIGINAL_RED = formation("4231")["red"]
+ORIGINAL_BLUE = formation("352")["blue"]
+ORIGINAL_RED = formation("433")["red"]
 BLUE_TEAM = [pos[:] for pos in ORIGINAL_BLUE]
 RED_TEAM = [pos[:] for pos in ORIGINAL_RED]
 
@@ -134,8 +134,8 @@ def main():
     pygame.draw.circle(SCREEN, WHITE, (WIDTH//2, HEIGHT//2), 6)
 
     # Penalty areas
-    pygame.draw.rect(SCREEN, WHITE, (80, 180, 240, 360), 2)          # Left
-    pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, 180, 240, 360), 2)   # Right
+    pygame.draw.rect(SCREEN, WHITE, (80, 120, 240, 480), 2)          # Left
+    pygame.draw.rect(SCREEN, WHITE, (WIDTH-320, 120, 240, 480), 2)   # Right
 
     # Goal areas
     pygame.draw.rect(SCREEN, WHITE, (80, 270, 72, 180), 2)           # Left
