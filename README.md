@@ -1,4 +1,5 @@
-# Version 1.0
+# Tactics Board Project by @spyderkam
+**version 1.0**
 
 ## Main Components:
 
@@ -48,4 +49,3 @@
 - Formation selection menu not implemented yet
 
 This represents Version 1.0 of the Tactics Board project, with core functionality implemented and room for planned improvements.
-
