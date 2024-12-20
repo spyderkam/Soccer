@@ -1,4 +1,4 @@
-# Tactics Board Project by @spyderkam
+# Tactics Board Project
 **version 1.0**
 
 ## Main Components:
