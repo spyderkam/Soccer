@@ -8,8 +8,11 @@
 - **T:** Toggle triangle (first 3 players after reset)
 - **Y:** Reset triangle
 
+
 ***
 To run the desktop app, use the 720p version. To run the 1080p version, use the [webb app](https://tacticsproject-spyderkam.replit.app/).
+***
+
 
 ## Questions Answered
 
