@@ -1,5 +1,7 @@
 #!/user/bin/env python3
 
+__author__ = "Claude 3.5 Sonnet V2"
+
 from flask import Flask, Response, render_template_string, request
 from flask_socketio import SocketIO, emit
 from main import SCREEN, main, BLUE_TEAM, RED_TEAM, BALL_POS, WIDTH, HEIGHT, draw_player, WHITE, triangle_points, draw_triangle
@@ -49,7 +51,7 @@ HTML_TEMPLATE = '''
       handleMouseDown(e);
       dragging = true;
     });
-    canvas.addEventListener('mousemove', throttle(handleMouseMove, 30)); // Throttle mousemove updates
+    canvas.addEventListener('mousemove', throttle(handleMouseMove, 16)); // Throttle mousemove updates
     canvas.addEventListener('mouseup', () => {
       dragging = false;
       selectedPlayer = null;
@@ -105,12 +107,21 @@ HTML_TEMPLATE = '''
       socket.emit('reset_triangle');
     }
 
+    let lastFrameTime = 0;
+    const frameDelay = 1000 / 60; // 60 FPS target
+    
     socket.on('board_update', function(data) {
+      const currentTime = performance.now();
+      if (currentTime - lastFrameTime < frameDelay) return;
+      
       const img = new Image();
       img.onload = function() {
-        ctx.drawImage(img, 0, 0);
+        requestAnimationFrame(() => {
+          ctx.drawImage(img, 0, 0);
+        });
       };
-      img.src = 'data:image/png;base64,' + data.image;
+      img.src = 'data:image/jpeg;base64,' + data.image;
+      lastFrameTime = currentTime;
     });
 
     socket.on('player_selected', function(data) {
@@ -246,7 +257,7 @@ def update_board():
     draw_triangle(SCREEN, triangle_points, None)
 
   buffer = io.BytesIO()
-  pygame.image.save(SCREEN, buffer, 'PNG')
+  pygame.image.save(SCREEN, buffer, 'JPEG', quality=85)
   buffer.seek(0)
   base64_image = base64.b64encode(buffer.getvalue()).decode()
   emit('board_update', {'image': base64_image}, broadcast=True)
