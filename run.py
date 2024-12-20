@@ -132,9 +132,14 @@ def home():
 
 @socketio.on('check_click')
 def check_click(data):
-  global BLUE_TEAM, RED_TEAM, triangle_points
+  global BLUE_TEAM, RED_TEAM, triangle_points, BALL_POS, show_ball
   x, y = data['x'], data['y']
     
+  # Check if ball is clicked first when visible
+  if show_ball and ((x - BALL_POS[0])**2 + (y - BALL_POS[1])**2)**0.5 < 15:
+    emit('player_selected', {'team': 'ball', 'index': 0})
+    return
+            
   for i, pos in enumerate(BLUE_TEAM):
     if ((x - pos[0])**2 + (y - pos[1])**2)**0.5 < 15:
       emit('player_selected', {'team': 'blue', 'index': i})
@@ -153,7 +158,7 @@ def check_click(data):
 
 @socketio.on('move_player')
 def move_player(data):
-  global BLUE_TEAM, RED_TEAM
+  global BLUE_TEAM, RED_TEAM, BALL_POS
   x, y = data['x'], data['y']
   team = data['team']
   index = data['index']
@@ -161,7 +166,10 @@ def move_player(data):
   global triangle_points
   new_pos = [x, y]
     
-  if team == 'blue':
+  if team == 'ball':
+    BALL_POS[0] = x
+    BALL_POS[1] = y
+  elif team == 'blue':
     old_pos = BLUE_TEAM[index]
     BLUE_TEAM[index] = new_pos
     if old_pos in triangle_points:
@@ -247,3 +255,4 @@ if __name__ == '__main__':
   os.environ['SDL_VIDEODRIVER'] = 'dummy'
   pygame.init()
   socketio.run(app, host='0.0.0.0', port=80, allow_unsafe_werkzeug=True)
+  
