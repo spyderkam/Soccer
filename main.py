@@ -3,7 +3,7 @@
 __author__ = "spyderkam"
 
 from database import *
-from tools import draw_triangle
+from tools import draw_triangle1
 import os
 import pygame
 import sys
@@ -54,7 +54,7 @@ def get_clicked_player(pos, team):
 
 def is_ball_clicked(pos):
   distance = ((pos[0] - BALL_POS[0])**2 + (pos[1] - BALL_POS[1])**2)**0.5
-  return distance < 12  # Increased from 10 to 12 for better clickability
+  return distance < 15  # Matches player click detection radius
 
 # Main game loop
 def main():
@@ -155,11 +155,11 @@ def main():
 
     # Draw ball
     if SHOW_BALL:
-      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 12)  # Increased from 10 to 12
+      pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)  # Increased from 12 to 15
 
     # Draw triangle
     if show_triangle and len(triangle_points) == 3:
-      draw_triangle(SCREEN, triangle_points, selected_team)
+      draw_triangle1(SCREEN, triangle_points, selected_team)
 
     # Update display
     pygame.display.flip()
@@ -169,3 +169,4 @@ def main():
 
 if __name__ == "__main__":
   main()
+  
