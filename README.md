@@ -1,5 +1,4 @@
-# Tactics Board Project
-***version 1.0***
+# Tactics Board Project v1.0
 
 ## Main Components:
 
