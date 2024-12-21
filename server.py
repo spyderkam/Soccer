@@ -4,7 +4,7 @@ __author__ = "Claude 3.5 Sonnet V2"
 
 from flask import Flask, Response, render_template_string, request
 from flask_socketio import SocketIO, emit
-from main import SCREEN, main, BLUE_TEAM, RED_TEAM, BALL_POS, WIDTH, HEIGHT, draw_player, WHITE, triangle_points, draw_triangle
+from main import SCREEN, main, BLUE_TEAM, RED_TEAM, BALL_POS, WIDTH, HEIGHT, draw_player, WHITE, triangle_points, draw_triangle1
 import base64
 import io
 import os
@@ -150,7 +150,7 @@ def check_click(data):
   x, y = data['x'], data['y']
     
   # Check if ball is clicked first when visible
-  if show_ball and ((x - BALL_POS[0])**2 + (y - BALL_POS[1])**2)**0.5 < 15:
+  if show_ball and ((x - BALL_POS[0])**2 + (y - BALL_POS[1])**2)**0.5 < 15:  # Matches player click detection radius
     emit('player_selected', {'team': 'ball', 'index': 0})
     return
             
@@ -254,10 +254,10 @@ def update_board():
     draw_player(SCREEN, pos, (255, 0, 0), i, show_numbers)
 
   if show_ball:
-    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 12)
+    pygame.draw.circle(SCREEN, (0, 0, 0), BALL_POS, 15)
         
   if show_triangle and len(triangle_points) == 3:
-    draw_triangle(SCREEN, triangle_points, None)
+    draw_triangle1(SCREEN, triangle_points, None)
 
   buffer = io.BytesIO()
   pygame.image.save(SCREEN, buffer, 'PNG')
